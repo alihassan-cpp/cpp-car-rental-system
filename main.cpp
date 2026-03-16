@@ -33,7 +33,8 @@ public:
         if (!isRented) {
             isRented = true;
             cout << "Car rented successfully.\n";
-        } else {
+        }
+        else {
             cout << "Car is already rented.\n";
         }
     }
@@ -42,7 +43,8 @@ public:
         if (isRented) {
             isRented = false;
             cout << "Car returned successfully.\n";
-        } else {
+        }
+        else {
             cout << "Car was not rented.\n";
         }
     }
@@ -97,7 +99,7 @@ public:
 
         cout << "\n--- Car List ---\n";
 
-        for (auto &c : cars) {
+        for (auto& c : cars) {
             c.display();
         }
     }
@@ -109,7 +111,7 @@ public:
         cout << "\nEnter Car ID to rent: ";
         cin >> id;
 
-        for (auto &c : cars) {
+        for (auto& c : cars) {
 
             if (c.getCarID() == id) {
                 c.rentCar();
@@ -127,10 +129,29 @@ public:
         cout << "\nEnter Car ID to return: ";
         cin >> id;
 
-        for (auto &c : cars) {
+        for (auto& c : cars) {
 
             if (c.getCarID() == id) {
                 c.returnCar();
+                return;
+            }
+        }
+
+        cout << "Car not found.\n";
+    }
+    void searchCar() {
+
+        int id;
+
+        cout << "\nEnter Car ID to search: ";
+        cin >> id;
+
+        for (auto& c : cars) {
+
+            if (c.getCarID() == id) {
+
+                cout << "\nCar Found:\n";
+                c.display();
                 return;
             }
         }
@@ -151,8 +172,8 @@ int main() {
         cout << "2. Display Cars\n";
         cout << "3. Rent Car\n";
         cout << "4. Return Car\n";
-        cout << "5. Exit\n";
-
+        cout << "5. Search Car\n";
+        cout << "6. Exit\n";
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -175,6 +196,10 @@ int main() {
             break;
 
         case 5:
+            system.searchCar();
+            break;
+
+        case 6:
             cout << "Exiting program...\n";
             return 0;
 
