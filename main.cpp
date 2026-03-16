@@ -74,6 +74,11 @@ public:
         cout << "\nEnter Car ID: ";
         cin >> id;
 
+        if (carExists(id)) {
+            cout << "Error: Car ID already exists.\n";
+            return;
+        }
+
         cin.ignore();
 
         cout << "Enter Brand: ";
@@ -177,6 +182,16 @@ public:
         }
 
         cout << "Car not found.\n";
+    }
+    bool carExists(int id) {
+
+        for (auto& c : cars) {
+            if (c.getCarID() == id) {
+                return true;
+            }
+        }
+
+        return false;
     }
 };
 
