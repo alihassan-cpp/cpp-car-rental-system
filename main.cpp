@@ -14,6 +14,9 @@ private:
     bool isRented;
 
 public:
+    double getPricePerDay() {
+        return pricePerDay;
+    }
     string getBrand() {
         return brand;
     }
@@ -128,6 +131,7 @@ public:
     void rentCar() {
 
         int id;
+        int days;
 
         cout << "\nEnter Car ID to rent: ";
         cin >> id;
@@ -135,8 +139,23 @@ public:
         for (auto& c : cars) {
 
             if (c.getCarID() == id) {
+
+                if (c.rentedStatus()) {
+                    cout << "Car already rented.\n";
+                    return;
+                }
+
+                cout << "Enter number of days: ";
+                cin >> days;
+
+                double totalCost = days * c.getPricePerDay();
+
+                cout << "Total rental cost: " << totalCost << endl;
+
                 c.rentCar();
+
                 saveToFile();
+
                 return;
             }
         }
