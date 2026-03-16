@@ -158,6 +158,26 @@ public:
 
         cout << "Car not found.\n";
     }
+    void deleteCar() {
+
+        int id;
+
+        cout << "\nEnter Car ID to delete: ";
+        cin >> id;
+
+        for (auto it = cars.begin(); it != cars.end(); it++) {
+
+            if (it->getCarID() == id) {
+
+                cars.erase(it);
+
+                cout << "Car deleted successfully.\n";
+                return;
+            }
+        }
+
+        cout << "Car not found.\n";
+    }
 };
 
 int main() {
@@ -173,7 +193,8 @@ int main() {
         cout << "3. Rent Car\n";
         cout << "4. Return Car\n";
         cout << "5. Search Car\n";
-        cout << "6. Exit\n";
+        cout << "6. Delete Car\n";
+        cout << "7. Exit\n";
         cout << "Enter choice: ";
         cin >> choice;
 
@@ -200,6 +221,10 @@ int main() {
             break;
 
         case 6:
+            system.deleteCar();
+            break;
+
+        case 7:
             cout << "Exiting program...\n";
             return 0;
 
