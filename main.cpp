@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -13,6 +14,21 @@ private:
     bool isRented;
 
 public:
+    string getBrand() {
+        return brand;
+    }
+
+    string getModel() {
+        return model;
+    }
+
+    double getPrice() {
+        return pricePerDay;
+    }
+
+    bool getStatus() {
+        return isRented;
+    }
     Car(int id, string b, string m, double price) {
         carID = id;
         brand = b;
@@ -91,7 +107,7 @@ public:
         cin >> price;
 
         cars.push_back(Car(id, brand, model, price));
-
+        saveToFile();
         cout << "Car added successfully.\n";
     }
 
@@ -120,6 +136,7 @@ public:
 
             if (c.getCarID() == id) {
                 c.rentCar();
+                saveToFile();
                 return;
             }
         }
@@ -138,6 +155,7 @@ public:
 
             if (c.getCarID() == id) {
                 c.returnCar();
+                saveToFile();
                 return;
             }
         }
@@ -175,6 +193,7 @@ public:
             if (it->getCarID() == id) {
 
                 cars.erase(it);
+                saveToFile();
 
                 cout << "Car deleted successfully.\n";
                 return;
@@ -193,11 +212,48 @@ public:
 
         return false;
     }
+    void saveToFile() {
+
+        ofstream file("cars.txt");
+
+        for (auto& c : cars) {
+
+            file << c.getCarID() << " "
+                << c.getBrand() << " "
+                << c.getModel() << " "
+                << c.getPrice() << " "
+                << c.getStatus() << endl;
+        }
+
+        file.close();
+    }
+    void loadFromFile() {
+
+        ifstream file("cars.txt");
+
+        int id;
+        string brand, model;
+        double price;
+        bool status;
+
+        while (file >> id >> brand >> model >> price >> status) {
+
+            Car car(id, brand, model, price);
+
+            if (status)
+                car.rentCar();
+
+            cars.push_back(car);
+        }
+
+        file.close();
+    }
 };
 
 int main() {
 
     RentalSystem system;
+    system.loadFromFile();
     int choice;
 
     while (true) {
